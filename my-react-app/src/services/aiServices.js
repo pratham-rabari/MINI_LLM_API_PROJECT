@@ -5,6 +5,18 @@ const model = {
     'deepseek-v4-flash-0731': '/callOpenRouterApi'
 }
 
+import { auth } from "../Firebase";
+
+async function getAuthToken() {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("Please log in first");
+  }
+
+  return user.getIdToken();
+}
+
 const systemPromptsObj = {
   'Teacher': "You are a patient teacher. Explain concepts clearly and simply with examples, focusing on helping the user understand rather than just giving answers.",
 
@@ -31,6 +43,7 @@ const systemPromptsObj = {
 
 export const callApi = async (prompt, modelName, selectedSystemPrompt,streamEnabled, onChunk, onUsage, temperature = 1.0, maxOutputTokens, context) => {
     try {
+        const token = await getAuthToken();
         console.log(maxOutputTokens,"mxx")
         const endpoint = model[modelName];
         const systemPrompt = systemPromptsObj[selectedSystemPrompt] || selectedSystemPrompt;
@@ -41,7 +54,8 @@ export const callApi = async (prompt, modelName, selectedSystemPrompt,streamEnab
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     prompt,
@@ -149,4 +163,3 @@ export const callApi = async (prompt, modelName, selectedSystemPrompt,streamEnab
 //         return {errorMsg:error.message};
 //     }
 // }
-

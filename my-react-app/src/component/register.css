@@ -1,0 +1,134 @@
+.register-page {
+  display: grid;
+  min-height: 100vh;
+  padding: 24px;
+  place-items: center;
+  box-sizing: border-box;
+  background: #f4f6fb;
+  color: #1f2937;
+  text-align: left;
+}
+
+.register-card {
+  width: min(100%, 420px);
+  padding: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgb(15 23 42 / 8%);
+  box-sizing: border-box;
+}
+
+.register-card h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.register-description {
+  margin: 8px 0 28px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.register-message {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.register-error {
+  color: #b91c1c;
+}
+
+.register-success {
+  color: #15803d;
+}
+
+.register-link {
+  margin: 20px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+}
+
+.register-link a {
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.register-form label {
+  margin-top: 8px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.register-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  color: #111827;
+  font: inherit;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.register-form input::placeholder {
+  color: #9ca3af;
+}
+
+.register-form input:focus {
+  border-color: #4f46e5;
+  outline: 3px solid rgb(79 70 229 / 15%);
+}
+
+.register-form button {
+  min-height: 46px;
+  margin-top: 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #4f46e5;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 150ms ease;
+}
+
+.register-form button:hover {
+  background: #4338ca;
+}
+
+.register-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.register-form button:focus-visible {
+  outline: 3px solid rgb(79 70 229 / 30%);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 28px 22px;
+  }
+}

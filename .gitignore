@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 server/.env
+server/serviceAccount.json
+my-react-app/.env
 dist
 dist-ssr
 *.local

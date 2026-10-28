@@ -7,6 +7,9 @@ import remarkGfm from "remark-gfm";
 import { callApi } from '../services/aiServices.js';
 import "katex/dist/katex.min.css";
 import { v4 as uuidv4 } from 'uuid';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Navigate } from 'react-router-dom';
+import { auth } from '../Firebase';
 
 const getUsage = (usage = {}) => ({
   inputTokens: usage.total_input_tokens ?? usage.promptTokens ?? usage.inputTokens ?? 0,
@@ -18,7 +21,8 @@ const getUsage = (usage = {}) => ({
 
 const OUTPUT_TOKEN_LIMIT = 5000;
 
-const Homs = () => {
+const Home = () => {
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [output, setOutput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [exceededModels, setExceededModels] = useState([]);
@@ -81,6 +85,12 @@ const Homs = () => {
   const menuRef = useRef(null);
   const compareMenuRef = useRef(null);
   const systemPromptMenuRef = useRef(null);
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user ?? null);
+    });
+  }, []);
 
   function formatGeminiHistory(history) {
     return history.flatMap((item) => [
@@ -400,6 +410,14 @@ const Homs = () => {
     };
   }, { inputTokens: 0, outputTokens: 0, totalTokens: 0 });
 
+  if (currentUser === undefined) {
+    return <p role="status">Checking your sign-in...</p>;
+  }
+
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="Main">
       <div className="top-box">
@@ -517,7 +535,9 @@ const Homs = () => {
             </div>
           </div>
           <div className="app-heading">
-            <h4 className="text-center">Welcome to MultiAi!</h4>
+            <h4 className="text-center">
+              Welcome, {currentUser.displayName || currentUser.email}!
+            </h4>
             <p>Max output token limit per model is 5000</p>
           </div>
           <div className="compare-menu-wrap" ref={compareMenuRef}>
@@ -730,4 +750,4 @@ const Homs = () => {
   )
 }
 
-export default Homs
+export default Home
